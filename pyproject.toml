@@ -1,0 +1,84 @@
+[project]
+name = "hyukebox"
+version = "0.1.0"
+description = "MCP server for AI-powered music discovery and playlist generation"
+authors = [
+    {name = "Hyukebox Team"}
+]
+readme = "CLAUDE.md"
+requires-python = ">=3.13"
+keywords = ["mcp", "music", "playlist", "llm", "recommendation", "spotify", "youtube"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Sound/Audio",
+]
+
+dependencies = [
+    # MCP Framework
+    "fastmcp>=2.11.3",
+
+    # HTTP Client
+    "httpx>=0.24.0",
+
+    # Database/Caching
+    "tinydb>=4.8.2",
+
+    # LLM Integration
+    "anthropic>=0.40.0",
+
+    # Music APIs
+    "spotipy>=2.23.0",      # Spotify API wrapper
+    "pylast>=5.2.0",        # Last.fm API wrapper
+
+    # YouTube API
+    "google-api-python-client>=2.100.0",
+    "google-auth-oauthlib>=1.2.0",
+    "google-auth-httplib2>=0.2.0",
+
+    # Data Validation & Settings
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-mock>=3.12.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.7.0",
+]
+
+[project.scripts]
+hyukebox = "hyukebox.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short"
+
+[tool.black]
+line-length = 100
+target-version = ['py313']
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "N", "W"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false  # Start lenient, tighten later
